@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ssh
+  name: ubuntu-sshserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ssh
+  template:
+    metadata:
+      labels:
+        app: ssh
+    spec:
+      containers:
+       - command: ["/usr/sbin/sshd","-De"]
+         image: registry.nonnoalex.dev/nonnoalex/ubuntu-sshserver:20.04
+         name: sshserver
+         imagePullPolicy: Always
+         ports:
+         - containerPort: 22
+           protocol: TCP
